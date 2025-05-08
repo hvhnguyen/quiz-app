@@ -5,6 +5,7 @@ import { getFormatedTime } from "../helper";
 import { Box, Card, CardContent, CardHeader, CardMedia, LinearProgress, List, ListItemButton, Typography, Button, Alert } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { green } from '@mui/material/colors';
+import Answer from "./Answer";
 
 
 export default function Result() {
@@ -30,12 +31,12 @@ export default function Result() {
         )
     }, [])
 
-    const calculateScore = questionAnswer => {
-        let tempScore = questionAnswer.reduce((acc,curr) => {
-            return curr.answer == curr.selected ? acc + 1 : acc;
-        }, 0)
-        setScore(tempScore)
-    }
+    const calculateScore = (questionAnswer) => {
+        let tempScore = questionAnswer.reduce((acc, curr) => {
+            return String(curr.answer) === String(curr.selected) ? acc + 1 : acc;
+        }, 0);
+        setScore(tempScore);
+    };
 
     const restart = () => {
         setContext({
@@ -63,6 +64,7 @@ export default function Result() {
     }
 
     return (
+        <>
         <Card sx={{ mt: 5, display: 'flex', width: '100%', maxWidth:640, mx: 'auto'}}>
             <Box sx={{ display: 'flex', felxDirection: 'column', flexGrow: 1 }}>
                 <CardContent sx={{flex: '1 0 auto', textAlign: 'center' }}>
@@ -105,5 +107,7 @@ export default function Result() {
                 image="./result.png"
             />
         </Card>
+        <Answer questionAnswers={questionAnswers} />
+        </>
     )
 }
